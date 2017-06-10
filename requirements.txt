@@ -1,0 +1,11 @@
+Flask
+Flask-Login
+Flask-Migrate
+Flask-SQLAlchemy
+gspread
+mysql-python
+oauth2client
+pygsheets
+pylint
+
+
