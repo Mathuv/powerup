@@ -1,0 +1,16 @@
+READ ME
+
+Current status: We have three separate components for the project:
+Julie's website, built with WIX that lets people learn about the project
+Mathu's backend, database MySQL and Python connections to a website that handles login and registration etc.
+Rachel's map, built on the Google Maps API, which currently runs off a MySQL local database, assuming a table called "workitems", with the structure `id`, `name`, `postcode`, `lat`, `lng`, `workitem`
+
+We also have an earlier set of Google spreadsheets which include csv files that relate postcodes to geocoded lat and long data, as well as the workitems info which is more like what Mathu has. 
+
+To do:
+- create tables in Mathu's database for the geocoding info, so that we can relate the items in his table 'projectitems' to locations (in his table called 'employees'), and to the lat/long data (not currently in his db). It may be possible that the Google map can directly geocode the postcodes without db lookup. If so, worth exploring.
+
+-adapt Rachel's map code (in the php and map.html scripts) to reflect the tables in Mathu's database (and his db location, username/pwd), not her current local database. This may require the addition of a few lines to JOIN tables (see postcode/geocoded/projectitems table info above).
+
+- add Rachel's map page/or at least the script in map.html to Julie's website in an appropriate location/way.
+
