@@ -88,3 +88,37 @@ class Role(db.Model):
 
     def __repr__(self):
         return '<Role: {}>'.format(self.name)
+
+
+class WorkItem(db.Model):
+    """
+    Create a WorkItem table
+    """
+
+    __tablename__ = 'workitems'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60), unique=True)
+    description = db.Column(db.String(200))
+    # employees = db.relationship('Employee', backref='workitem',
+    #                             lazy='dynamic')
+
+    def __repr__(self):
+        return '<WorkItem: {}>'.format(self.name)
+
+
+# class ProjectItem(db.Model):
+#     """
+#     Create a ProjectItem table
+#     """
+
+#     __tablename__ = 'projectitems'
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(60), unique=True)
+#     description = db.Column(db.String(200))
+#     # employees = db.relationship('Employee', backref='projectitem',
+#     #                             lazy='dynamic')
+
+#     def __repr__(self):
+#         return '<WorkItem: {}>'.format(self.name)
