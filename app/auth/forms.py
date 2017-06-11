@@ -15,9 +15,9 @@ class RegistrationForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     username = StringField('Username', validators=[DataRequired()])
     first_name = StringField('First Name', validators=[DataRequired()])
-    last_name = StringField('Postcode', validators=[DataRequired()])
-    postcode = StringField('Phone No', validators=[DataRequired()])
-    phone = StringField('Username', validators=[DataRequired()])
+    last_name = StringField('Last Name', validators=[DataRequired()])
+    postcode = StringField('Postcode', validators=[DataRequired()])
+    phone = StringField('Phone No', validators=[DataRequired()])
     password = PasswordField('Password', validators=[
         DataRequired(),
         EqualTo('confirm_password')
@@ -56,6 +56,6 @@ class ProjectItemForm(FlaskForm):
                                 get_label="name")
 
     start_date = StringField('Start Date', validators=[DataRequired()])
-    start_date = StringField('Start Date', validators=[DataRequired()])
+    end_date = StringField('End Date', validators=[DataRequired()])
     more_details = StringField('More Details')
     submit = SubmitField('Submit')
