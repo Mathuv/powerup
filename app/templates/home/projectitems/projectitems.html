@@ -1,8 +1,8 @@
-<!-- app/templates/admin/workitems/workitems.html -->
+<!-- app/templates/admin/projectitems/projectitems.html -->
 
 {% import "bootstrap/utils.html" as utils %}
 {% extends "base.html" %}
-{% block title %}WorkItems{% endblock %}
+{% block title %}ProjectItems{% endblock %}
 {% block body %}
 <div class="content-section">
   <div class="outer">
@@ -11,8 +11,8 @@
         <br/>
         {{ utils.flashed_messages() }}
         <br/>
-        <h1 style="text-align:center;">WorkItems</h1>
-        {% if workitems %}
+        <h1 style="text-align:center;">ProjectItems</h1>
+        {% if projectitems %}
           <hr class="intro-divider">
           <div class="center">
             <table class="table table-striped table-bordered">
@@ -26,24 +26,28 @@
                 </tr>
               </thead>
               <tbody>
-              {% for workitem in workitems %}
+              {% for projectitem in projectitems %}
                 <tr>
-                  <td> {{ workitem.name }} </td>
-                  <td> {{ workitem.description }} </td>
+                  <td> {{ projectitem.id }} </td>
+                  <td> {{ projectitem.account_id }} </td>
+                  <td> {{ projectitem.workitem_id }} </td>
+                  <td> {{ projectitem.start_date }} </td>
+                  <td> {{ projectitem.end_date }} </td>
+                  <td> {{ projectitem.more_details }} </td>                  
                   <!--<td>
-                    {% if workitem.employees %}
-                      {{ workitem.employees.count() }}
+                    {% if projectitem.employees %}
+                      {{ projectitem.employees.count() }}
                     {% else %}
                       0
                     {% endif %}
                   </td>-->
                   <td>
-                    <a href="{{ url_for('admin.edit_workitem', id=workitem.id) }}">
+                    <a href="{{ url_for('auth.edit_projectitem', id=projectitem.id) }}">
                       <i class="fa fa-pencil"></i> Edit 
                     </a>
                   </td>
                   <td>
-                    <a href="{{ url_for('admin.delete_workitem', id=workitem.id) }}">
+                    <a href="{{ url_for('auth.delete_projectitem', id=projectitem.id) }}">
                       <i class="fa fa-trash"></i> Delete 
                     </a>
                   </td>
@@ -55,12 +59,12 @@
           <div style="text-align: center">
         {% else %}
           <div style="text-align: center">
-            <h3> No workitems have been added. </h3>
+            <h3> No projectitems have been added. </h3>
             <hr class="intro-divider">
         {% endif %}
-          <a href="{{ url_for('admin.add_workitem') }}" class="btn btn-default btn-lg">
+          <a href="{{ url_for('auth.add_projectitem') }}" class="btn btn-default btn-lg">
             <i class="fa fa-plus"></i>
-            Add WorkItem
+            Add ProjectItem
           </a>
         </div>
       </div>

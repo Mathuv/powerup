@@ -4,9 +4,9 @@ from flask import flash, redirect, render_template, url_for
 from flask_login import login_required, login_user, logout_user
 
 from . import auth
-from forms import LoginForm, RegistrationForm
+from forms import LoginForm, RegistrationForm, ProjectItemForm
 from .. import db
-from ..models import Employee
+from ..models import Employee, ProjectItem
 
 
 @auth.route('/register', methods=['GET', 'POST'])
@@ -21,6 +21,8 @@ def register():
                             username=form.username.data,
                             first_name=form.first_name.data,
                             last_name=form.last_name.data,
+                            postcode=form.postcode.data,
+                            phone=form.phone.data,
                             password=form.password.data)
 
         # add employee to the database
@@ -78,3 +80,96 @@ def logout():
 
     # redirect to the login page
     return redirect(url_for('auth.login'))
+
+
+# Project Item Views
+
+@auth.route('/projectitems', methods=['GET', 'POST'])
+@login_required
+def list_projectitems():
+    """
+    List all projectitems
+    """
+
+    projectitems = ProjectItem.query.all()
+
+    return render_template('home/projectitems/projectitems.html',
+                           projectitems=projectitems, title="ProjectItems")
+
+
+@auth.route('/projectitems/add', methods=['GET', 'POST'])
+@login_required
+def add_projectitem():
+    """
+    Add a projectitem to the database
+    """
+
+    add_projectitem = True
+
+    form = ProjectItemForm()
+    if form.validate_on_submit():
+        # projectitem = ProjectItem(name=form.name.data,
+        #                           description=form.description.data)
+        projectitem = ProjectItem(account_id=form.account.data, workitem_id=form.workitem.data,
+                                  start_date=form.start_date.data, end_date=form.end_date.data, more_details=form.more_details.data)
+        try:
+            # add projectitem to the database
+            db.session.add(projectitem)
+            db.session.commit()
+            flash('You have successfully added a new projectitem.')
+        except:
+            # in case projectitem name already exists
+            flash('Error: projectitem name already exists.')
+
+        # redirect to projectitems page
+        return redirect(url_for('auth.list_projectitems'))
+
+    # load projectitem template
+    return render_template('home/projectitems/projectitem.html', action="Add",
+                           add_projectitem=add_projectitem, form=form,
+                           title="Add ProjectItem")
+
+
+@auth.route('/projectitems/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_projectitem(id):
+    """
+    Edit a projectitem
+    """
+
+    add_projectitem = False
+
+    projectitem = ProjectItem.query.get_or_404(id)
+    form = ProjectItemForm(obj=projectitem)
+    if form.validate_on_submit():
+        projectitem.name = form.name.data
+        projectitem.description = form.description.data
+        db.session.commit()
+        flash('You have successfully edited the projectitem.')
+
+        # redirect to the projectitems page
+        return redirect(url_for('auth.list_projectitems'))
+
+    form.description.data = projectitem.description
+    form.name.data = projectitem.name
+    return render_template('home/projectitems/projectitem.html', action="Edit",
+                           add_projectitem=add_projectitem, form=form,
+                           projectitem=projectitem, title="Edit ProjectItem")
+
+
+@auth.route('/projectitems/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_projectitem(id):
+    """
+    Delete a projectitem from the database
+    """
+
+    projectitem = ProjectItem.query.get_or_404(id)
+    db.session.delete(projectitem)
+    db.session.commit()
+    flash('You have successfully deleted the projectitem.')
+
+    # redirect to the projectitems page
+    return redirect(url_for('auth.list_projectitems'))
+
+    return render_template(title="Delete ProjectItem")

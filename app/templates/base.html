@@ -32,11 +32,12 @@
                         <li><a href="{{ url_for('admin.list_workitems') }}">Work Items</a></li>  
                     {% else %}
                         <li><a href="{{ url_for('home.dashboard') }}">Dashboard</a></li>
-                    {% endif %}
+                        <li><a href="{{ url_for('auth.list_projectitems') }}">Request Work</a></li>
+                    {% endif %}                    
                     <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
                     <li><a><i class="fa fa-user"></i>  Hi, {{ current_user.username }}!</a></li>
                 {% else %}
-                    <li><a href="{{ url_for('home.homepage') }}">Home</a></li>
+                    <li><a href="{{ url_for('home.homepage') }}">Home</a></li>                    
                     <li><a href="{{ url_for('auth.register') }}">Register</a></li>
                     <li><a href="{{ url_for('auth.login') }}">Login</a></li>
                 {% endif %}

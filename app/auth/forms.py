@@ -3,8 +3,9 @@
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, Email, EqualTo
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
 
-from ..models import Employee
+from ..models import Employee, WorkItem
 
 
 class RegistrationForm(FlaskForm):
@@ -14,7 +15,9 @@ class RegistrationForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     username = StringField('Username', validators=[DataRequired()])
     first_name = StringField('First Name', validators=[DataRequired()])
-    last_name = StringField('Last Name', validators=[DataRequired()])
+    last_name = StringField('Postcode', validators=[DataRequired()])
+    postcode = StringField('Phone No', validators=[DataRequired()])
+    phone = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[
         DataRequired(),
         EqualTo('confirm_password')
@@ -38,3 +41,21 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
+
+
+# Project Item form
+class ProjectItemForm(FlaskForm):
+    """
+    Form for admin to add or edit a Project Item
+    """
+    # name = StringField('Name', validators=[DataRequired()])
+    # description = StringField('Description', validators=[DataRequired()])
+    account = QuerySelectField(query_factory=lambda: Employee.query.all(),
+                               get_label="first_name")
+    workitem = QuerySelectField(query_factory=lambda: WorkItem.query.all(),
+                                get_label="name")
+
+    start_date = StringField('Start Date', validators=[DataRequired()])
+    start_date = StringField('Start Date', validators=[DataRequired()])
+    more_details = StringField('More Details')
+    submit = SubmitField('Submit')

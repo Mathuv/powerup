@@ -23,6 +23,8 @@ class Employee(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     department_id = db.Column(db.Integer, db.ForeignKey('departments.id'))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
+    postcode = db.Column(db.Integer)
+    phone = db.Column(db.Integer)
     is_admin = db.Column(db.Boolean, default=False)
 
     @property
@@ -107,18 +109,21 @@ class WorkItem(db.Model):
         return '<WorkItem: {}>'.format(self.name)
 
 
-# class ProjectItem(db.Model):
-#     """
-#     Create a ProjectItem table
-#     """
+class ProjectItem(db.Model):
+    """
+    Create a ProjectItem table
+    """
 
-#     __tablename__ = 'projectitems'
+    __tablename__ = 'projectitems'
 
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(60), unique=True)
-#     description = db.Column(db.String(200))
-#     # employees = db.relationship('Employee', backref='projectitem',
-#     #                             lazy='dynamic')
+    id = db.Column(db.Integer, primary_key=True)
+    account_id = db.Column(db.Integer, db.ForeignKey('employees.id'))
+    workitem_id = db.Column(db.Integer, db.ForeignKey('workitems.id'))
+    start_date = db.Column(db.Date)
+    end_date = db.Column(db.Date)
+    more_details = db.Column(db.String(400))
+    # employees = db.relationship('Employee', backref='projectitem',
+    #                             lazy='dynamic')
 
-#     def __repr__(self):
-#         return '<WorkItem: {}>'.format(self.name)
+    def __repr__(self):
+        return '<WorkItem: {}>'.format(self.name)
