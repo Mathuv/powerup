@@ -1,7 +1,9 @@
 Flask
+flask-bootstrap
 Flask-Login
 Flask-Migrate
 Flask-SQLAlchemy
+Flask-WTF
 gspread
 mysql-python
 oauth2client
